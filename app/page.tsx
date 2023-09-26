@@ -1,12 +1,35 @@
-"use client"
+import Products from "@/components/Products"
+import getQueryClient from "@/components/providers/getQueryClient"
+import { dehydrate } from "@tanstack/react-query"
+import Hydrate from "@/components/providers/HydrateClient"
 
-import { ModeToggle } from '@/components/mode-toggle'
-import { Button } from '@/components/ui/button'
+export async function getProducts() {
+  const res = await fetch('https://dummyjson.com/products')
+ 
+  if (!res.ok) {
+    throw new Error('Failed to fetch data')
+  }
 
-export default function Home() {
+  const data = await res.json()
+
+  return data.products
+}
+
+export type ProductType = {
+  images: string[]
+  id: number
+}
+
+export default async function Home() {
+  const queryClient = getQueryClient()
+  await queryClient.prefetchQuery(["products"], getProducts)
+  const dehydratedState = dehydrate(queryClient)
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-        <Button onClick={() => console.log("clicked")}>Try</Button>
+      <Hydrate state={dehydratedState}>
+        <Products />
+      </Hydrate>
     </main>
   )
 }

@@ -2,6 +2,7 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { ThemeProvider } from '@/components/theme-provider'
+import ReactQueryProvider from '@/components/providers/ReactQueryProvider'
 
 import NavBar from '@/components/NavBar'
 
@@ -25,9 +26,11 @@ export default function RootLayout({
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
-        > 
-          <NavBar />
-          {children}
+        >  
+          <ReactQueryProvider>
+            <NavBar />
+            {children}
+          </ReactQueryProvider>
         </ThemeProvider>
       </body>
     </html>
