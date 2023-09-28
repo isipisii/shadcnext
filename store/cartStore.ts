@@ -11,9 +11,15 @@ export const useCartStore = create<CartState>((set) => ({
   addToCart: (item) => set((state) => {
     const existingItem = state.cartItems.find(cartItem => cartItem.id === item.id)
     
+    if(existingItem){
+      return ({ 
+        cartItems: state.cartItems.map((cartItem) => existingItem.id === cartItem.id ? {...cartItem, quantity: cartItem.quantity + 1 } : cartItem) 
+      })
+    }
+
     return ({ 
-      cartItems: existingItem ? state.cartItems.map((cartItem) => existingItem.id === cartItem.id ? {...cartItem, quantity: cartItem.quantity + 1 } : item) : [...state.cartItems, item]
+      cartItems: [...state.cartItems, {...item}]
     })
-  }),
+  }), 
   removeToCart: (itemId) => set((state) => ({ cartItems: state.cartItems.filter(cartItem => cartItem.id !== itemId) })),
 }))
