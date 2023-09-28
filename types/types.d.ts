@@ -8,4 +8,5 @@ type ProductType = {
     stock: number
     category: string
     brand: string
+    quantity: number
 }
