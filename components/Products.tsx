@@ -3,22 +3,17 @@
 import { useQueryClient, useQuery } from '@tanstack/react-query'
 import { getProducts } from '@/services/productApi'
 
-import ItemCard from './ItemCard'
+import ProductCard from './cards/ProductCard'
 import { useCartStore } from '@/store/cartStore'
 
-const Products = () => {
+function Products () {
   const {data: products } = useQuery<ProductType[]>({queryKey: ["products"], queryFn: getProducts })
-  const { addToCart, cartItems } = useCartStore(state => state)
+  const { addToCart } = useCartStore(state => state)
 
-  function handleAddToCart(product: ProductType): void {
-    addToCart(product)
-  }
-
-  console.log(cartItems)
   return (
     <div className='flex items-center gap-4 flex-wrap mt-20'> 
         {products?.map((product, idx) => (
-            <ItemCard product={product} key={idx} handleAddToCart={handleAddToCart} />
+            <ProductCard product={product} key={idx} handleAddToCart={addToCart} />
         ))}
     </div>
   )

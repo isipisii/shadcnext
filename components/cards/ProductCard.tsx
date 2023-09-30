@@ -1,6 +1,5 @@
 "use client"
 
-import { FC } from "react"
 import { 
   Card,
   CardTitle,
@@ -8,18 +7,16 @@ import {
   CardHeader,
   CardDescription,
   CardFooter
-} from "./ui/card"
-import { Button } from "./ui/button"
+} from "../ui/card"
+import { Button } from "../ui/button"
 import { ShoppingCart } from 'lucide-react';
-
-import { useCartStore } from "@/store/cartStore";
-// import Image from "next/image"
 
 interface IItemCard {
     product: ProductType
     handleAddToCart: (product: ProductType) => void
 }
-const ItemCard: FC<IItemCard> = ({ product, handleAddToCart }) => {
+
+const ProductCard = ({ product, handleAddToCart }: IItemCard) => {
 
   return (
     <Card className="w-full max-w-[300px] h-full">
@@ -40,11 +37,11 @@ const ItemCard: FC<IItemCard> = ({ product, handleAddToCart }) => {
       <CardFooter>
         <div className="flex gap-3 w-full">
           <Button className="w-full">Buy now</Button>
-          <Button className="w-1/2" onClick={() => handleAddToCart(product)}><ShoppingCart size={16} /></Button>
+          <Button className="w-1/2" size={"icon"} onClick={() => handleAddToCart(product)}><ShoppingCart size={16} /></Button>
         </div>
       </CardFooter>
     </Card>
   )
 }
 
-export default ItemCard
+export default ProductCard

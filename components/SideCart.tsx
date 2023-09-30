@@ -6,14 +6,14 @@ import {
   Sheet,
   SheetClose,
   SheetContent,
-  SheetDescription,
+  // SheetDescription,
   SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from "./ui/sheet"
 import { ShoppingCart } from "lucide-react"
- 
+import CartProductCard from "./cards/CartProductCard"
 
 function SideCart() {
   const { cartItems } = useCartStore(state => state)
@@ -24,29 +24,29 @@ function SideCart() {
         <SheetTrigger asChild>
           <div className="relative">
             {cartItemsCount > 0 && <p className="bg-red-600 text-white text-[.65rem] bottom-6 right-0 padding py-1 px-2 rounded-full absolute">{cartItemsCount}</p>}
-            <Button variant="outline"  className="flex gap-2">Cart <ShoppingCart size={16} /></Button>
+            <Button variant="outline" className="flex gap-2">Cart <ShoppingCart size={16} /></Button>
           </div>
         </SheetTrigger>
 
-        <SheetContent side={"right"}>
+        <SheetContent side={"right"} className="overflow-auto gap-4 flex flex-col">
             <SheetHeader>
                 <SheetTitle>Cart Items</SheetTitle>
             </SheetHeader>
 
-            <div>
-              {cartItems.map((cartItem, index) => {
-                console.log(cartItem.quantity)
-                return (
-                  <div key={index}>
-                    <h1>{cartItem.brand}</h1>
-                    <h1>{cartItem.quantity}</h1>
-                  </div>
-                ) 
-              })}
-            </div>
-
+            {/* <div className="overflow-auto">
+              <div className="max-h-[450px]"> */}
+                <div className="flex flex-col">
+                  {cartItems.map((cartItem, index) => (
+                    <CartProductCard product={cartItem}  key={index}/>
+                  ))}
+                </div>
+              {/* </div>
+            </div> */}
+        
             <SheetFooter>
+              <SheetClose asChild>
                 <Button type="submit" className="w-full">Buy</Button>
+              </SheetClose>
             </SheetFooter>
 
         </SheetContent>

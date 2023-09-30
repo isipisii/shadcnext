@@ -5,6 +5,7 @@ import { ModeToggle } from "./mode-toggle"
 import SideCart from "./SideCart"
 
 function NavBar() {
+  
   return (
     <nav className="border-b py-3 px-4 flex items-center justify-between fixed w-full bg-inherit">
          <Link href="/">
