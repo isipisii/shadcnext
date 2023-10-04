@@ -9,4 +9,5 @@ type ProductType = {
     category: string
     brand: string
     quantity: number
+    thumbnail: string
 }

@@ -49,5 +49,5 @@ export const useCartStore = create<CartState>((set, get) => ({
       cartItems: state.cartItems.map((cartItem) => productId === cartItem.id ? {...cartItem, quantity: cartItem.quantity - 1 } : cartItem) 
   })),
 
-  calculateTotal: () => set((state) => ({ total: state.cartItems.reduce((acc, cartItem) => acc + cartItem.price, 0)}))
+  calculateTotal: () => set((state) => ({ total: state.cartItems.reduce((acc, cartItem) => acc + cartItem.price * cartItem.quantity, 0)}))
 }))

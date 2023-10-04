@@ -1,5 +1,6 @@
 "use client"
  
+import { useEffect } from "react"
 import { useCartStore } from "@/store/cartStore"
 import { Button } from "./ui/button"
 import {
@@ -16,8 +17,13 @@ import { ShoppingCart } from "lucide-react"
 import CartProductCard from "./cards/CartProductCard"
 
 function SideCart() {
-  const { cartItems } = useCartStore(state => state)
+  const { cartItems, calculateTotal, total } = useCartStore(state => state)
   const cartItemsCount = cartItems.length
+
+  useEffect(() => {
+    calculateTotal()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[cartItems])
 
   return (
     <Sheet>
@@ -45,7 +51,7 @@ function SideCart() {
         
             <SheetFooter>
               <SheetClose asChild>
-                <Button type="submit" className="w-full">Buy</Button>
+                <Button type="submit" className="w-full">Buy {total}</Button>
               </SheetClose>
             </SheetFooter>
 

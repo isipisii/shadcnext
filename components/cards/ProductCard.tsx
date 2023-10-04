@@ -27,10 +27,9 @@ const ProductCard = ({ product, handleAddToCart }: IItemCard) => {
 
       <CardContent className="flex flex-col gap-2">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={product.images[0]} alt="product image" className="rounded-md object-cover w-full h-[200px]" />
+        <img src={product.thumbnail} alt="product image" className="rounded-md object-cover w-full h-[200px]" />
         <div className="flex items-center justify-between w-full">
           <p>${product.price}</p>
-
         </div>
       </CardContent>  
 
