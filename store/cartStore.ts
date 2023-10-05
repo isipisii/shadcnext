@@ -1,9 +1,9 @@
 import { create } from 'zustand'
 import { toast } from "@/components/ui/use-toast"
 
-export type CartState = {
-  cartItems: ProductType[]
-  addToCart: (product: ProductType) => void
+type CartState = {
+  cartItems: TProduct[]
+  addToCart: (product: TProduct) => void
   removeToCart: (product: number) => void
   total: number
   increaseCartItemQuantity: (productId: number) => void
@@ -19,10 +19,6 @@ export const useCartStore = create<CartState>((set, get) => ({
     const existingItem = get().cartItems.find(cartItem => cartItem.id === product.id)
 
     if(existingItem){
-       set((state) =>  ({ 
-        cartItems: state.cartItems
-      }))
-
       toast({
         title: "Existing product",
         description: `${product.title} is already in your cart`,

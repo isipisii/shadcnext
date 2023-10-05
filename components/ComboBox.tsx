@@ -48,8 +48,8 @@ export function ComboBox({ filterProductsCategory }: {filterProductsCategory: (c
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[200px] z-10">
-        <Command className="overflow-auto">
+      <PopoverContent className="w-[200px] p-0 z-10">
+        <Command>
           {/* <CommandInput placeholder="Search category..." />
           <CommandEmpty>No category found.</CommandEmpty> */}
           <CommandGroup className="max-h-[300px] overflow-auto">

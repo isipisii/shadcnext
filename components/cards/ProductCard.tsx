@@ -12,8 +12,8 @@ import { Button } from "../ui/button"
 import { ShoppingCart } from 'lucide-react';
 
 interface IItemCard {
-    product: ProductType
-    handleAddToCart: (product: ProductType) => void
+    product: TProduct
+    handleAddToCart: (product: TProduct) => void
 }
 
 const ProductCard = ({ product, handleAddToCart }: IItemCard) => {

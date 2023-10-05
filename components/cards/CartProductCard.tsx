@@ -7,7 +7,7 @@ import { Input } from "../ui/input"
 import { addComma } from "@/utils/addComma"
 
 interface ICartProductCard {
-    product: ProductType
+    product: TProduct
 }
 
 function CartProductCard({ product }: ICartProductCard) {
@@ -17,7 +17,7 @@ function CartProductCard({ product }: ICartProductCard) {
   return (
     <div className="flex gap-4 py-3">
       {/*  eslint-disable-next-line @next/next/no-img-element */}
-      <img src={product.images[0]} alt="product" className="rounded-md object-cover h-[90px] w-[80px]" />
+      <img src={product.thumbnail} alt="product" className="rounded-md object-cover h-[90px] w-[80px]" />
 
       <div className="flex flex-col gap-3 w-full">
         <div className="flex flex-col gap-1">

@@ -1,4 +1,4 @@
-type ProductType = {
+type TProduct = {
     images: string[]
     id: number
     title: string

@@ -13,8 +13,10 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "./ui/sheet"
-import { ShoppingCart } from "lucide-react"
+import { Separator } from "@/components/ui/separator"
+import { ShoppingCart, ShoppingBag } from "lucide-react"
 import CartProductCard from "./cards/CartProductCard"
+import { addComma } from "@/utils/addComma"
 
 function SideCart() {
   const { cartItems, calculateTotal, total } = useCartStore(state => state)
@@ -36,25 +38,36 @@ function SideCart() {
 
         <SheetContent side={"right"} className="overflow-auto gap-4 flex flex-col">
             <SheetHeader>
-                <SheetTitle>Cart Items</SheetTitle>
+                <SheetTitle className="text-xl">Cart</SheetTitle>
             </SheetHeader>
-
-            {/* <div className="overflow-auto">
-              <div className="max-h-[450px]"> */}
-                <div className="flex flex-col">
-                  {cartItems.map((cartItem, index) => (
-                    <CartProductCard product={cartItem}  key={index}/>
-                  ))}
+            {cartItemsCount === 0 ? 
+              <div className="w-full h-full flex items-center justify-center">
+                <div className="flex items-center flex-col gap-4">
+                  <ShoppingBag size={50} />
+                  <p className="font-medium text-sm ">Your cart is Empty</p>
                 </div>
-              {/* </div>
-            </div> */}
-        
-            <SheetFooter>
-              <SheetClose asChild>
-                <Button type="submit" className="w-full">Buy {total}</Button>
-              </SheetClose>
-            </SheetFooter>
-
+              </div>  
+              :
+              <>
+                <div className="h-[500px] overflow-auto">
+                  <div className="flex flex-col">
+                    {cartItems.map((cartItem, index) => (
+                      <CartProductCard product={cartItem}  key={index}/>
+                    ))}
+                  </div>
+                </div>
+                
+                <Separator />
+                <div className="flex justify-end">
+                  <p className="font-medium">Total: ${addComma(total)}</p>
+                </div>
+                <SheetFooter>
+                  <SheetClose asChild>
+                    <Button type="submit" className="w-full">Buy</Button>
+                  </SheetClose>
+                </SheetFooter>
+              </>
+            }
         </SheetContent>
     </Sheet>
   )

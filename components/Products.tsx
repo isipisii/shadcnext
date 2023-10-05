@@ -1,17 +1,16 @@
 "use client"
 
-import { useEffect, useState } from 'react'
-import { useQueryClient, useQuery } from '@tanstack/react-query'
+import { useState } from 'react'
+import { useQuery } from '@tanstack/react-query'
 import { getProducts } from '@/services/productApi'
 
 import ProductCard from './cards/ProductCard'
 import { useCartStore } from '@/store/cartStore'
-// import { useProductStore } from '@/store/productStore'
 import { ComboBox } from './ComboBox'
 
 function Products () {
-  const { data: products } = useQuery<ProductType[]>({queryKey: ["products"], queryFn: getProducts })
-  const [filteredProducts, setFilteredProducts] = useState<ProductType[]>([])
+  const { data: products } = useQuery<TProduct[]>({queryKey: ["products"], queryFn: getProducts })
+  const [filteredProducts, setFilteredProducts] = useState<TProduct[]>([])
   const { addToCart } = useCartStore(state => state)
  
   function filterProductsCategory(category: string): void {
