@@ -4,11 +4,6 @@ import connectDB from "@/lib/connectDb"
 import User from "@/models/user.model"
 import bcrypt from "bcrypt"
 
-interface ICredentials {
-    email: string,
-    passwrod: string
-}
-
 export const authOptions: NextAuthOptions = {
     session: {
         strategy: "jwt",
@@ -18,20 +13,24 @@ export const authOptions: NextAuthOptions = {
             type: "credentials",
             credentials: {},
             async authorize(credentials, req) {
-                const { email, password } = credentials as { email: string, password: string }
+                const { email, password } = credentials as TSigninCredentials
 
                 try {
                     await connectDB();
-                    const user = await User.findOne({ email });
-        
+                    const user = await User.findOne({ email }).select("+password");
                     if (!user) throw Error("Invalid credentials");
         
                     const didMatch = await bcrypt.compare(password, user.password);
                     if (!didMatch) throw Error("Invalid credentials");
         
-                    return user;
+                    return {
+                        name: user.name,
+                        email: user.email,
+                        id: user._id
+                    }
                 } catch (error) {
                     console.log(error);
+                    return null;
                 }
             },
         })
@@ -49,7 +48,8 @@ export const authOptions: NextAuthOptions = {
            }
            return session
        },
-    }
+    },
+    secret: process.env.NEXTAUTH_SECRET,
 }
 
 const authHandler = NextAuth(authOptions)

@@ -11,18 +11,18 @@ interface ISignUpCredentials {
 
 export const POST = async (req: NextRequest ) => {
     try {
-        const body = await req.json() as ISignUpCredentials
-        const { email, password } = body
+        await connectDB();
 
-        if(!email || !password) {
+        const body = await req.json() as ISignUpCredentials
+        const { email, password, name } = body
+
+        if(!email || !password || !name) {
             return NextResponse.json({
                 success: false,
                 status: 400,
                 message: "Missing credentials",
             })
         }
-
-        await connectDB();
     
         const user = await User.findOne({ email });
         if (user)
@@ -33,7 +33,7 @@ export const POST = async (req: NextRequest ) => {
         })
 
         const hashedPwd = await bcrypt.hash(password, 10);
-        await User.create({ email, password: hashedPwd });
+        await User.create({ email, password: hashedPwd, name });
     
         return NextResponse.json({
           success: true,

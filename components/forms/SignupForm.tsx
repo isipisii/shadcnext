@@ -6,43 +6,42 @@ import { cn } from "@/lib/utils"
 import { Button } from "../ui/button"
 import { Input } from "../ui/input"
 import { Label } from "../ui/label"
-
-import { useRouter } from "next/navigation"
-import { signIn } from "next-auth/react"
 import { toast } from "../ui/use-toast"
-import { AlertDestructive } from "../AlertDestructive"
+
+import { useRouter } from "next/navigation";
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-export function SigninForm({ className, ...props }: UserAuthFormProps) {
-  const [error, setError] = React.useState("")
+
+export function SignupForm({ className, ...props }: UserAuthFormProps) {
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
-  const [signinCredentials, setSigninCredentials] = React.useState<TSigninCredentials>({
-    email: "",
-    password: ""
+  const [signUpCredentials, setSignUpCredentials] = React.useState<TSignupCredentials>({
+    name: "",
+    password: "",
+    email: ""
   })
-  
   const router = useRouter()
 
   async function onSubmit(event: React.SyntheticEvent): Promise<void> {
     event.preventDefault()
     setIsLoading(true)
+
     try {
-      // this will be sent to the crendentials that has been configured in auth options for authorization
-      const res = await signIn("credentials", {
-        email: signinCredentials.email,
-        password: signinCredentials.password,
-        redirect: false
-      })
-
-      if(res?.error) return setError(res.error), setIsLoading(false)
-
-      toast({
-        title: "Signed in Successfully!",
-        variant: "successful",
+      const res = await fetch("/api/signup", {
+        headers: {
+          "Content-Type": "application/json"
+        },
+        method: "POST",
+        body: JSON.stringify(signUpCredentials),
       })
       
-      router.replace("/")
+      console.log(await res.json())
+      toast({
+        title: "Account Created Successfully!",
+        variant: "successful",
+        description: "You can now sign in your account"
+      })
+      router.replace("/signin")
       setIsLoading(false)
     } catch (error) {
       console.error(error)
@@ -52,7 +51,7 @@ export function SigninForm({ className, ...props }: UserAuthFormProps) {
   function handleChange(e: React.ChangeEvent<HTMLInputElement>): void {
     const { name, value } = e.target
 
-    setSigninCredentials(prevState => (
+    setSignUpCredentials(prevState => (
       {...prevState, [name]: value}
     ))
   }
@@ -60,8 +59,21 @@ export function SigninForm({ className, ...props }: UserAuthFormProps) {
   return (
     <div className={cn("grid gap-6 border p-4 rounded-lg", className)} {...props}>
       <form onSubmit={onSubmit}>
-        {error && <AlertDestructive description={error} />}
         <div className="grid gap-3">
+            <div className="grid gap-2">
+              <Label htmlFor="text">
+                  Name
+              </Label>
+              <Input
+                  id="text"
+                  placeholder="e.g. John Doe"
+                  type="text"
+                  disabled={isLoading}
+                  name="name"
+                  value={signUpCredentials.name}
+                  onChange={handleChange}
+              />
+            </div>
             <div className="grid gap-2">
               <Label htmlFor="email">
                   Email
@@ -71,12 +83,12 @@ export function SigninForm({ className, ...props }: UserAuthFormProps) {
                   placeholder="name@example.com"
                   type="email"
                   name="email"
-                  value={signinCredentials.email}
+                  value={signUpCredentials.email}
+                  onChange={handleChange}
                   autoCapitalize="none"
                   autoComplete="email"
                   autoCorrect="off"
                   disabled={isLoading}
-                  onChange={handleChange}
               />
             </div>
             <div className="grid gap-2">
@@ -87,9 +99,9 @@ export function SigninForm({ className, ...props }: UserAuthFormProps) {
                   id="password"
                   placeholder="••••••"
                   type="password"
-                  disabled={isLoading}
                   name="password"
-                  value={signinCredentials.password}
+                  value={signUpCredentials.password}
+                  disabled={isLoading}
                   onChange={handleChange}
               />
             </div>
@@ -97,7 +109,7 @@ export function SigninForm({ className, ...props }: UserAuthFormProps) {
               {/* {isLoading && (
               <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
               )} */}
-              Sign In
+              Sign Up
             </Button>
         </div>
       </form>

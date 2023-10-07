@@ -1,8 +1,8 @@
-import React from 'react'
+import { SignupForm } from "@/components/forms/SignupForm"
 
 const Signup = () => {
   return (
-    <div>page</div>
+    <SignupForm className="w-full max-w-[400px]"/>
   )
 }
 

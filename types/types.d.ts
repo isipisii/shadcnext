@@ -11,3 +11,12 @@ type TProduct = {
     quantity: number
     thumbnail: string
 }
+
+type TSigninCredentials = {
+    password: string
+    email: string
+}
+
+type TSignupCredentials = {
+    name: string
+} & TSigninCredentials

@@ -4,7 +4,6 @@ const userSchema = new Schema({
     name: {
       type: String,
       required: [true, "Name is required"],
-      trim: true,
       minLength: [2, "Name must be larger than 2 characters"],
       maxLength: [50, "Name must be lesser than 50 characters"],
     },
@@ -23,6 +22,9 @@ const userSchema = new Schema({
       minLength: [6, "Password must be larger than 6 characters "],
       select: false,
     },
+    role: {
+      
+    }
   },
   { timestamps: true }
 );

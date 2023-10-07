@@ -32,7 +32,6 @@ export function ComboBox({ filterProductsCategory }: {filterProductsCategory: (c
   const [open, setOpen] = React.useState(false)
   const [value, setValue] = React.useState("")
   
-
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
