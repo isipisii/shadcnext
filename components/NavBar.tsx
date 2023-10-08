@@ -12,11 +12,12 @@ function NavBar() {
   const { data: session, status } = useSession();
   const isAuthenticated = status === "authenticated";
 
+
   return (
     <nav className="border-b py-3 px-4 flex items-center justify-between fixed w-full bg-inherit z-[30]">
       <Link href="/">
         <h4 className="scroll-m-20 text-xl font-semibold tracking-tight bg">
-          shadcnext {session?.user?.name}
+          shadcnext {session?.user?.id} {session?.user?.name} {session?.user?.email}
         </h4>
       </Link>
 

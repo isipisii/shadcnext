@@ -36,11 +36,11 @@ export const authOptions: NextAuthOptions = {
         })
     ],
     callbacks: {
-       jwt(params: any) {
-            if(params.user){
-                params.token.id = params.user.id
+       jwt({ user, token }) {
+            if(user){
+                token.id = user.id
             }
-            return params.token
+            return token
        },
        session({ session, token }) {
            if(session.user) {
