@@ -17,7 +17,7 @@ function NavBar() {
     <nav className="border-b py-3 px-4 flex items-center justify-between fixed w-full bg-inherit z-[30]">
       <Link href="/">
         <h4 className="scroll-m-20 text-xl font-semibold tracking-tight bg">
-          shadcnext {session?.user?.id} {session?.user?.name} {session?.user?.email}
+          shadcnext {session?.user?.id} {session?.user?.name}
         </h4>
       </Link>
 
