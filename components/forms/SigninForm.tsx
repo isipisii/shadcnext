@@ -12,10 +12,12 @@ import { signIn } from "next-auth/react"
 import { toast } from "../ui/use-toast"
 import { AlertDestructive } from "../AlertDestructive"
 
+import Link from "next/link"
+
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function SigninForm({ className, ...props }: UserAuthFormProps) {
-  const [error, setError] = React.useState("")
+  // const [error, setError] = React.useState("")
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
   const [signinCredentials, setSigninCredentials] = React.useState<TSigninCredentials>({
     email: "",
@@ -34,15 +36,20 @@ export function SigninForm({ className, ...props }: UserAuthFormProps) {
         password: signinCredentials.password,
         redirect: false
       })
-      
-      if(res?.error) return setError(res.error), setIsLoading(false)
 
-      toast({
-        title: "Signed in Successfully!",
-        variant: "successful",
-      })
+      if(res?.error && res.status === 401) {
+        toast({
+          title: "Invalid credentials.",
+          variant: "destructive",
+        })
+      } else {
+        toast({
+          title: "Signed in Successfully!",
+          variant: "successful",
+        })
+        router.replace("/")
+      }
       
-      router.replace("/")
       setIsLoading(false)
     } catch (error) {
       console.error(error)
@@ -59,8 +66,9 @@ export function SigninForm({ className, ...props }: UserAuthFormProps) {
 
   return (
     <div className={cn("grid gap-6 border p-4 rounded-lg", className)} {...props}>
-      <form onSubmit={onSubmit}>
-        {error && <AlertDestructive description={error} />}
+      <form onSubmit={onSubmit} className="grid gap-4">
+        <h1 className="text-xl font-semibold">Sign in</h1>
+        {/* {error && <AlertDestructive description={error} />} */}
         <div className="grid gap-3">
             <div className="grid gap-2">
               <Label htmlFor="email">
@@ -97,9 +105,11 @@ export function SigninForm({ className, ...props }: UserAuthFormProps) {
               {/* {isLoading && (
               <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
               )} */}
-              Sign In
+              Sign in
             </Button>
         </div>
+        {/*eslint-disable-next-line react/no-unescaped-entities */}  
+        <p className="text-sm text-center">Don't have an account? <Link href="/signup">Sign up</Link></p>
       </form>
     </div>
   )

@@ -9,6 +9,7 @@ import { Label } from "../ui/label"
 import { toast } from "../ui/use-toast"
 
 import { useRouter } from "next/navigation";
+import Link from "next/link"
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -58,7 +59,8 @@ export function SignupForm({ className, ...props }: UserAuthFormProps) {
 
   return (
     <div className={cn("grid gap-6 border p-4 rounded-lg", className)} {...props}>
-      <form onSubmit={onSubmit}>
+      <form onSubmit={onSubmit} className="grid gap-4">
+        <h1 className="text-xl font-semibold">Create Account</h1>
         <div className="grid gap-3">
             <div className="grid gap-2">
               <Label htmlFor="text">
@@ -112,6 +114,7 @@ export function SignupForm({ className, ...props }: UserAuthFormProps) {
               Sign Up
             </Button>
         </div>
+        <p className="text-sm text-center">Have an account? <Link href="/signin">Sign in</Link></p>
       </form>
     </div>
   )

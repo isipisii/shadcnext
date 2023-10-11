@@ -12,7 +12,6 @@ function NavBar() {
   const { data: session, status } = useSession();
   const isAuthenticated = status === "authenticated";
 
-
   return (
     <nav className="border-b py-3 px-4 flex items-center justify-between fixed w-full bg-inherit z-[30]">
       <Link href="/">
