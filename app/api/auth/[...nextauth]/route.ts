@@ -3,6 +3,7 @@ import CredentialsProvider from "next-auth/providers/credentials"
 import connectDB from "@/lib/connectDb"
 import User from "@/models/user.model"
 import bcrypt from "bcrypt"
+import { NextResponse } from "next/server"
 
 export const authOptions: NextAuthOptions = {
     session: {

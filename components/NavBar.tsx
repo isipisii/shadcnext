@@ -6,7 +6,7 @@ import SideCart from "./SideCart"
 import { useSession } from "next-auth/react"
 import { Button } from "./ui/button"
 import { signOut } from "next-auth/react"
-
+import { useRouter } from "next/navigation"
 
 function NavBar() {
   const { data: session, status } = useSession();
@@ -24,7 +24,13 @@ function NavBar() {
         <div className="flex items-center gap-4">
           <SideCart />
           <ModeToggle />
-          <Button onClick={() => signOut()}>Sign out</Button>
+          <Button
+            onClick={async() => {
+              await signOut()
+            }}
+          >
+            Sign out
+          </Button>
         </div>
       )}
     </nav>

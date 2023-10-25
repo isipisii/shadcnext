@@ -19,9 +19,8 @@ export const POST = async (req: NextRequest ) => {
         if(!email || !password || !name) {
             return NextResponse.json({
                 success: false,
-                status: 400,
                 message: "Missing credentials",
-            })
+            }, { status: 400 })
         }
     
         const user = await User.findOne({ email });
@@ -30,22 +29,20 @@ export const POST = async (req: NextRequest ) => {
             success: false,
             status: 400,
             message: "User already exists",
-        })
+        }, {  status: 400, })
 
         const hashedPwd = await bcrypt.hash(password, 10);
         await User.create({ email, password: hashedPwd, name });
     
         return NextResponse.json({
           success: true,
-          status: 201,
           message: "Account created",
-        })
+        }, { status: 201, })
 
       } catch (error) {
         return NextResponse.json({
           success: false,
-          status: 500,
           message: "Internal server error",
-        })
+        }, {status: 500})
       }
 }

@@ -13,7 +13,6 @@ import Link from "next/link"
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-
 export function SignupForm({ className, ...props }: UserAuthFormProps) {
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
   const [signUpCredentials, setSignUpCredentials] = React.useState<TSignupCredentials>({
@@ -26,9 +25,8 @@ export function SignupForm({ className, ...props }: UserAuthFormProps) {
   async function onSubmit(event: React.SyntheticEvent): Promise<void> {
     event.preventDefault()
     setIsLoading(true)
-
     try {
-      const res = await fetch("/api/signup", {
+      const res = await fetch("/api/auth/signup", {
         headers: {
           "Content-Type": "application/json"
         },

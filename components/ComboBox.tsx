@@ -49,8 +49,8 @@ export function ComboBox({ filterProductsCategory }: {filterProductsCategory: (c
       </PopoverTrigger>
       <PopoverContent className="w-[200px] p-0 z-10">
         <Command>
-          {/* <CommandInput placeholder="Search category..." />
-          <CommandEmpty>No category found.</CommandEmpty> */}
+          <CommandInput placeholder="Search category..." />
+          <CommandEmpty>No category found.</CommandEmpty>
           <CommandGroup className="max-h-[300px] overflow-auto">
             {categories?.map((category) => (
               <CommandItem
